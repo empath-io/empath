@@ -1,0 +1,17 @@
+  <div id="send-after-form" class="repeat-forms">
+
+    <input type="hidden" name="trigger[interval]" value='0' />
+    <div class="form-group date-choose">
+      <label for="date" class="col-sm-2 control-label">Occurs once after</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control time inc-dec-num" id="hour" placeholder="hr" name="trigger[hour]" value="<%= @trigger.hour %>">
+      </div>
+      <div class="col-sm-3">
+        <input type="text" class="form-control time inc-dec-num" id="minute" placeholder="min" name="trigger[minute]" value="<%= @trigger.minute %>">
+      </div>
+      <input type="hidden" name="trigger[trigger_time_zone]" value="<%= @experiment.user.default_trigger_time_zone %>">
+      <div class="col-sm-4">
+        has passed since subject signup.
+      </div>
+    </div>    
+  </div><!-- end #repeat-daily-form-->   

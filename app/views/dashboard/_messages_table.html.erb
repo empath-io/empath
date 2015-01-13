@@ -1,0 +1,55 @@
+<%
+  table_id = "messages-table-#{table_type}-#{operation.name.gsub(/\W/,'-').downcase}"
+%>
+<table class="table table-bordered messages-table" id="<%= table_id %>">
+  <thead>
+    <tr>
+      <!-- <th>Subject</th> -->
+      <th>Name</th>
+      <th>Phone Number</th>
+      <th class="response">Response</th>
+      <th>Time</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% incoming_messages.each do |m| %>
+      <tr class="<%= 'danger' if operation.response_warrants_signal(m.body) %>" id="message-<%= m.id %>">
+        <td> <%=  if m.subject 
+                    m.subject.name 
+                  else
+                    'No name available'
+                  end
+              %>
+        </td>
+        <td><%= m.from_number %></td>
+        <td class="response"><%= m.body %></td>
+        <td>
+            <%= 
+                if m.created_at > Time.zone.today.at_beginning_of_day
+                  "Today, #{m.created_at.strftime("%l:%M%P")}"
+                else
+                  m.created_at.strftime "%l:%M%P %-m/%-d/%y" 
+                end
+             %>
+        </td>
+        <td class="button service-recovery">
+          <%= 
+            if m.subject
+              resource_button(dashboard_phone_call_path(@experiment,m.subject),'<i class="fa fa-lg fa-fw fa-phone-square"></i>',"##{table_id}","Place a call to subject with your phone")
+              # link_to("Call", dashboard_phone_call_path(@experiment,m.subject), remote: true) 
+            else
+              ''
+            end
+          %>
+        </td>
+        <td class="button deactivate">
+          <%= 
+            resource_button(deactivate_message_path(m.id),'<i class="fa fa-lg fa-fw fa-trash-o"></i>',"##{table_id}","Deactivate this incoming message","button-message-#{m.id}-deactivate",'deactivate',{confirm: 'Are you sure?'},'post')
+          %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

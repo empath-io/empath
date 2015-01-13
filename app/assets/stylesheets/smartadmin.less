@@ -1,0 +1,50 @@
+.mobile-hide {
+	@media (max-width: 768px) {
+		display:none;		
+	}
+}
+
+.mobile-show {
+	@media (min-width: 769px) {
+		display:none;		
+	}
+}
+
+.minifyme {
+	padding-top:8px;
+	height:36px;
+
+	.minified & {
+		padding-top:5px;
+	}
+
+	.jarviswidget>div>.row>table {
+		margin-top:-13px;
+		font-size:10px;
+		overflow-x:scroll
+	}
+}
+
+body#login {
+
+	.display-image {
+		margin-top: -30px;
+	}
+
+	.hero {
+		background-image: none;
+		span#login-header-space a:visited {
+			color:white;
+		}
+	}
+
+}
+
+table {
+	.btn {
+		@media (max-width:768px){
+			padding:4px 2px;
+		}
+	}
+}
+

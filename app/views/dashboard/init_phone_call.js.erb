@@ -1,0 +1,10 @@
+if ('<%= !@notice.nil? %>' == 'true') {
+	<%= 
+		if !@notice.nil?
+			return_modal_js('dashboard',{:notice => @notice}).html_safe 
+		else
+			''
+		end
+	%>
+	$('#modal').modal('show');
+}

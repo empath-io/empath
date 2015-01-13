@@ -1,0 +1,79 @@
+<div id="scoreboard">
+
+<div class="row stats">
+  <div class="col-xs-12 col-sm-6 col-sm-offset-6 col-md-6 col-md-offset-6 numbers">
+    <div class="row">
+    <ul id="sparks" class="">
+      <li class="sparks-info title col-sm-4">
+        <div class="row">
+          <h5 class="col-xs-12">Today</h5>
+        </div>
+      </li>
+      <li class="sparks-info title col-sm-4">
+        <div class="row">
+          <h5 class="col-xs-12">7 Day</h5>
+        </div>
+      </li>
+      <li class="sparks-info title col-sm-4">
+        <div class="row">
+          <h5 class="col-xs-12">30 Day</h5>
+        </div>
+      </li>
+    </ul>
+  </div>
+  </div>
+</div>
+
+  <% @operations.each_with_index do |o,i| 
+        color_str = @colors_by_op[i]
+  %>
+    <div class="row stats">
+      <div class="col-xs-12 col-sm-6 col-md-6 operation-title">
+          <h2><%= o.name %></h2>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-6 numbers">
+        <div class="row">
+        <ul id="sparks" class="">
+          <li class="sparks-info col-sm-4">
+            <div class="row">
+              <div class="col-xs-6 center score">
+                <p>Avg</p>
+                <p><span style="color:<%= color_str %>"><%= o.avg_responses_in_past(0).round(2) %></span></p>
+              </div>
+              <div class="col-xs-6 center score">
+                <p>Count</p>
+                <p><span style="color:<%= color_str %>"><%= o.find_incoming_messages_in_past(0).count %></span></p>
+              </div>
+            </div>
+          </li>
+          <li class="sparks-info col-sm-4">
+            <div class="row">
+              <div class="col-xs-6 center score">
+                <p>Avg</p>
+                <p><span style="color:<%= color_str %>"><%= o.avg_responses_in_past(6).round(2) %></span></p>
+              </div>
+              <div class="col-xs-6 center score">
+                <p>Count</p>
+                <p><span style="color:<%= color_str %>"><%= o.find_incoming_messages_in_past(6).count %></span></p>
+              </div>
+            </div>
+          </li>
+          <li class="sparks-info col-sm-4">
+            <div class="row">
+              <div class="col-xs-6 center score">
+                <p>Avg</p>
+                <p><span style="color:<%= color_str %>"><%= o.avg_responses_in_past(29).round(2) %></span></p>
+              </div>
+              <div class="col-xs-6 center score">
+                <p>Count</p>
+                <p><span style="color:<%= color_str %>"><%= o.find_incoming_messages_in_past(29).count %></span></p>
+              </div>
+            </div>
+          </li>
+        </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div><!-- end #scoreboard -->

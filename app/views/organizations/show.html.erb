@@ -1,0 +1,62 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @organization.name %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @organization.type %>
+</p>
+
+<p>
+  <strong>Approved:</strong>
+  <%= @organization.approved %>
+</p>
+
+<% if can? :create, User %> 
+    <%= button_to @new_user_link + '.js', remote: true, class: "btn btn-default btn-lg new-resource", id:"new-user-button", method:'get' do %>
+      <span class="fa fa-lg fa-fw fa-user"></span> New User
+    <% end %>
+<% end %>
+
+<%= begin_jarvis_widget %>
+
+<header>
+  <h2>Listing Users</h2>
+</header>
+
+<div><!-- activities table widget div-->
+
+  <div class="row"> <!-- row for table -->
+
+<table class="table table-bordered" id="users-table">
+  <thead>
+    <tr>
+      <th>First name</th>
+      <th>Last name</th>
+      <th>Login</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody id="users-table-body">
+    <%= render @users %>
+  </tbody>
+</table>
+</div><!-- end .row -->
+
+  <div id="modal-wrapper">
+  </div>
+
+  </div><!-- end activity table widgets div -->
+  </div><!-- end booking table widget div -->
+<%= end_jarvis_widget %>	
+
+<%= link_to 'Edit', edit_organization_path(@organization) %> |
+<%= link_to 'Back', organizations_path %>

@@ -1,0 +1,25 @@
+data_to_plot = <%= @data_as_json.html_safe %>;
+options.xaxis=	{
+			        mode: "time",
+			        timeformat: "<%= @time_format %>"
+			    };
+options.series = {
+			        lines: { show: <%= (@data_type=='avg') ? 'true' : 'false' %> },
+			        points: { show: true }
+			      }
+// debugger;			    
+// Draw plot
+plot = $.plot($("#placeholder"), 
+  [
+  	<% @keys.each.with_index do |k,i| %>
+    	{
+    		label:"<%= @experiment.operations[i].name %>",
+    		data: data_to_plot[<%= i %>],
+    		color: "<%= @colors_by_op[i] %>"
+    	},
+	<% end %>
+  ], options
+);
+// Add plot type
+$('#placeholder').data('plot-type',"<%= @bin_type %>");
+

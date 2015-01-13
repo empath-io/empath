@@ -1,0 +1,12 @@
+<tr>
+  <td><%= operation.name %></td>      
+  <td>
+    <% if can? :update, Operation %>
+      <%= edit_resource_button(edit_operation_path(operation),'#operations-table','Edit Operation') %>
+    <% end %>
+  <td>
+  <% if can? :destroy, Operation %>
+    <%= destroy_resource_button(operation_path(operation),'#operations-table','Delete operation') %>
+  <% end %>
+  </td>
+</tr>

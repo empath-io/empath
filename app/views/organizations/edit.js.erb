@@ -1,0 +1,2 @@
+$('#modal-wrapper').html("<%= escape_javascript(render :partial => 'modal', :locals => { :show_modal => @show_modal, :concierge => @concierge } ) %>");
+$('#modal').modal('<%= @show_modal %>');

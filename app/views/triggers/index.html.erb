@@ -1,0 +1,43 @@
+<div id="triggers-page">
+
+<% if can? :create, Trigger %> 
+    <%= button_to new_experiment_trigger_path(@experiment) + '.js', remote: true, class: "btn btn-default btn-lg new-resource", id:"new-trigger-button", method:'get' do %>
+      <span class="fa fa-lg fa-fw fa-flash"></span> New Trigger
+    <% end %>
+<% end %>
+
+<%= begin_jarvis_widget %>
+
+<header>
+  <h2>Listing Triggers</h2>
+</header>
+
+<div><!-- activities table widget div-->
+
+  <div class="row"> <!-- row for table -->
+
+<div class="table-container">
+<table class="table table-bordered" id="triggers-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody id="triggers-table-body">
+    <%= render @triggers %>
+  </tbody>
+</table>
+</div><!-- end .table-container -->
+</div><!-- end .row -->
+
+  <div id="modal-wrapper">
+  </div>
+
+  </div><!-- end activity table widgets div -->
+  </div><!-- end booking table widget div -->
+<%= end_jarvis_widget %>
+</div><!-- end #booking-page -->

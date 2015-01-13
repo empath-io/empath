@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @trigger.name %>
+</p>
+
+<p>
+  <strong>Trigger:</strong>
+  <%= @trigger.trigger_id %>
+</p>
+
+<p>
+  <strong>Operationtype:</strong>
+  <%= @trigger.triggertype_id %>
+</p>
+
+<%= link_to 'Edit', edit_trigger_path(@trigger) %> |
+<%= link_to 'Back', triggers_path %>

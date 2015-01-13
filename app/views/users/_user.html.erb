@@ -1,0 +1,26 @@
+<tr>
+  <td><%= user.first_name %></td>
+  <td><%= user.last_name %></td>
+  <td><%= user.login %></td>
+  <td><%= user.email %></td>
+  <td><%= user.role %></td>
+  <td><%= user.organization.name.capitalize if (user.organization) %></td>        
+  <td>
+    <%= if user.experiments.empty?
+        # disable button
+        resource_button("#","exp","#users-table","Browse User's Experiments","","",{},'get',false,true)
+      elsif can? :read, user.experiments.first
+        # HTML request
+        resource_button(user_experiments_path(user),"exp","#users-table","Browse User's Experiments","","",{},'get',false)
+      end %>
+  <td>
+    <% if can? :update, user %>
+      <%= edit_resource_button(edit_user_path(user)+'.js',"#users-table",'Edit user') %>
+    <% end %>
+  </td>
+  <td>
+  <% if can? :destroy, user %>
+    <%= destroy_resource_button(user,'#users-table','Delete user') %>
+  <% end %>
+  </td>
+</tr>

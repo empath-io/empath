@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  trigger_id: 1
+  operationtype_id: 1
+
+two:
+  name: MyString
+  trigger_id: 1
+  operationtype_id: 1

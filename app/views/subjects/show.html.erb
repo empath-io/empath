@@ -1,0 +1,18 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Experiment:</strong>
+  <%= @subject.experiment_id %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @subject.email %>
+</p>
+
+<p>
+  <strong>Phone number:</strong>
+  <%= @subject.phone_number %>
+</p>
+
+<%= link_to 'Edit', edit_subject_path(@subject) %> 

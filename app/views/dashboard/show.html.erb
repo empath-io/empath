@@ -1,0 +1,186 @@
+<div id="dashboard-page">
+
+<%= begin_jarvis_widget %>
+
+<header>
+  <h2>Dashboard: <%= @experiment.name.split.map(&:capitalize).join(' ')  %></h2>
+</header>
+
+<div><!-- activities table widget div-->
+  <%= render partial: 'scoreboard' %>
+
+  <ul id="main-tab" class="nav nav-tabs bordered">
+    <li class="active">
+      <a href="#responses-tab" data-toggle="tab">Responses <span class="badge bg-color-<%= if (@todays_message_count > 0) then "red" else "blue" end %>  txt-color-white"><%= @todays_message_count %></span></a>
+    </li>
+    <li class="">
+      <a href="#trends-tab" data-toggle="tab"><i class="fa fa-fw fa-lg fa-bar-chart-o"></i> Trends</a>
+    </li>
+  </ul>
+
+  <div id="main-tab-content" class="tab-content padding-10">
+    <div class="tab-pane fade active in" id="responses-tab">
+      <%= render partial: 'operation_messages_tables' %>
+    </div> <!-- end #responses-tab -->
+    <div class="tab-pane fade" id="trends-tab">
+
+      <div class="nav-pill-container">
+        <ul class="nav nav-pills">
+          <li class="active"><a class="plot-link" href="#plot-by-month" data-bin-type="month" data-start-time="<%= (Time.zone.now-2.months).to_i %>" data-end-time="<%= (Time.zone.now).to_i %>" data-toggle="tab">Month</a></li>
+<!--           <li class=""><a class="plot-link"  href="#plot-by-day" data-bin-type="hour" data-start-time="<%= (Time.zone.now-4.days).to_i %>" data-end-time="<%= (Time.zone.now).to_i %>" data-toggle="tab">Day</a></li>
+ -->
+          <li class=""><a class="plot-link"  href="#plot-by-hour" data-bin-type="minute" data-start-time="<%= (Time.zone.now-12.hours).to_i %>" data-end-time="<%= (Time.zone.now).to_i %>" data-toggle="tab">Hour</a></li>
+          <div class="clearfix">&nbsp;</div>
+        </ul>
+      </div><!-- end .nav-pill-container -->
+      <div id="placeholder" style="width:100%;height:400px;"></div>
+
+    </div> <!-- end #trends-tab -->
+  </div> <!-- end #main-tab-content -->
+
+
+
+  <div id="modal-wrapper">
+    <% # render partial: 'modal' %>
+  </div>
+
+  </div><!-- end activity table widgets div -->
+  </div><!-- end booking table widget div -->
+<%= end_jarvis_widget %>
+</div><!-- end #booking-page -->
+
+<script>
+  $(function(){
+
+    data_to_plot = <%= @data_as_json.html_safe %>;
+
+    options = {
+      legend: {
+        show: true,
+        //labelBoxBorderColor: color
+        //noColumns: number
+        position: "ne",
+        //margin: number of pixels or [x margin, y margin]
+        //backgroundColor: null or color
+        //backgroundOpacity: number between 0 and 1
+        //container: null or jQuery object/DOM element/jQuery expression
+        //sorted: null/false, true, "ascending", "descending", "reverse", or a comparator
+      },
+      xaxis: {
+        mode: "time",
+        timeformat: "<%= @time_format %>"
+      },
+      grid: { 
+        hoverable: true, 
+        clickable: true, 
+        autoHighlight: true 
+      },
+      series: {
+        lines: { show: <%= (@data_type=='avg') ? 'true' : 'false' %> },
+        points: { show: true }
+      }
+    };
+    // Draw plot on tab press
+    $('a[href="#trends-tab"]').on('shown.bs.tab', function (e) {
+      // e.target // activated tab
+      // e.relatedTarget // previous tab
+      // debugger
+      plot = $.plot($("#placeholder"), 
+        [
+          <% @keys.each.with_index do |k,i| %>
+            {
+            label:"<%= @experiment.operations[i].name %>",
+            data: data_to_plot[<%= i %>],
+            color: "<%= @colors_by_op[i] %>"
+            },
+          <% end %>      
+        ], options
+      );
+      // Add plot type
+      $('#placeholder').data('plot-type',"<%= @bin_type %>");      
+
+    })
+
+    // Redraw plot when a.plot-link is clicked
+    $('a.plot-link').click(function(){
+        var binType = $(this).data('bin-type');
+        var startTime = $(this).data('start-time');
+        var endTime = $(this).data('end-time');
+        $.ajax({
+            url: "<%= dashboard_path(@experiment) %>.js",
+            data: { bin_type: binType, start_time: startTime, end_time:endTime, data_type: 'avg'},
+            type: 'GET',
+            dataType: 'script',
+            complete:    function() {
+                          // debugger;
+                        },
+            success:    function(data, textStatus, xhr)   {
+                          // debugger;
+                        },
+            error:      function(requestObject, error, errorThrown) {
+                          console.log('error!');
+                          debugger;
+                        },        
+        });
+
+    });
+
+    // Resize sidebar when message table buttons are clicked
+    $('a.message-table-button').on('shown.bs.tab', function (e) {
+      ensureHeightOfSidebar();
+    });
+
+
+    // Add callbacks
+    // $("#placeholder").on('plotclick', function ( event, pos, item ) {
+    //   // item.seriesIndex == dataset #
+    //   // item.dataIndex
+    //   // item.datapoint == [x,y]
+    //   // If current plot-type is 'day', then re-draw with plot-type 'minute'
+    //   if ($(this).data('plot-type')=='day') {
+    //     var one_day = 24*3600; // in seconds
+    //     // Make ajax call
+    //     $.ajax({
+    //         url: "<%= dashboard_path(@experiment) %>.js",
+    //         data: { bin_type: 'minute', start_time: item.datapoint[0], end_time:item.datapoint[0] + one_day,data_type: 'precise'},
+    //         type: 'GET',
+    //         dataType: 'script',
+    //         complete:    function() {
+    //                       // debugger;
+    //                     },
+    //         success:    function(data, textStatus, xhr)   {
+    //                       // debugger;
+    //                     },
+    //         error:      function(requestObject, error, errorThrown) {
+    //                       console.log('error!');
+    //                       debugger;
+    //                     },        
+    //     });
+    //   }
+    //   else {
+    //     var one_month = 30*24*3600*1000; // in seconds
+    //     // Make ajax call
+    //     $.ajax({
+    //         url: "<%= dashboard_path(@experiment) %>.js",
+    //         data: { plot_type: 'day', start_time: item.datapoint[0]-one_month/2, end_time:item.datapoint[0]+one_month/2},
+    //         type: 'GET',
+    //         dataType: 'script',
+    //         complete:    function() {
+    //                       // debugger;
+    //                     },
+    //         success:    function(data, textStatus, xhr)   {
+    //                       // debugger;
+    //                     },
+    //         error:      function(requestObject, error, errorThrown) {
+    //                       console.log('error!');
+    //                       debugger;
+    //                     },        
+    //     });        
+    //   }
+    // });
+
+  });
+
+
+
+</script>

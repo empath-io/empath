@@ -1,0 +1,34 @@
+<h1>Listing <%= @klass.name.capitalize.pluralize %></h1>
+
+<% if can? :create, Organization %> 
+    <%= button_to new_organization_path + '.js', remote: true, class: "btn btn-default btn-lg new-resource", id:"new-org-button", method:'get' do %>
+      <span class="fa fa-lg fa-fw fa-user"></span> New Organization
+    <% end %>
+<% end %>
+
+<div class="table-container">
+<table class="table table-bordered"  id="organizations-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Approved</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody id="organizations-table-body">
+
+    <%= render @organizations %>
+
+  </tbody>
+</table>
+</div> <!-- end .table-container -->
+
+<br>
+
+  <div id="modal-wrapper">
+  </div>

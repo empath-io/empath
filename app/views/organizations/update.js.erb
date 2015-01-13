@@ -1,0 +1,9 @@
+if (<%= obj_has_errors(@organization) %> == 1) {
+	$('#modal-wrapper').html("<%= escape_javascript(render :partial => 'modal', :locals => { :show_modal => @show_modal, :organization => @organization } ) %>");
+}
+
+// Replace table with new table
+<%= return_js_for_replacing_collection_partial("#organizations-table-body",@organizations).html_safe %>
+
+$('#modal').modal('<%= @show_modal %>');         
+

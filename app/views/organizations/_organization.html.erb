@@ -1,0 +1,17 @@
+      <tr>
+        <td><%= link_to(organization.name,organization_users_path(organization)) %></td>
+        <td><%= organization.type %></td>
+        <td><%= organization.approved %></td>
+        <td>
+          <%= resource_button(organization_users_path(organization),'<i class="fa fa-lg fa-fw fa-user"></i>','#organizations-table','View Users','organization-users-button',class_name='',d_hash={},method="get",remote=false) %>
+        </td>
+        <td>
+          <%= show_resource_button(organization_path(organization)+'.js',"#organizations-table",'More detail') %>
+        </td>
+        <td>
+            <%= edit_resource_button(edit_organization_path(organization)+'.js',"#organizations-table",'Edit Org') %>
+        </td>
+        <td>
+          <%= destroy_resource_button(organization,'#organizations-table','Delete Org') %>
+        </td>
+      </tr>

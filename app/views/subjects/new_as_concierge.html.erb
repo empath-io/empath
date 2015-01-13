@@ -1,0 +1,63 @@
+<div class="container">
+	<div class="row" id="tagline">
+		<!-- <h1>Hey, <%= current_user.first_name.capitalize %>!</h1> -->
+		<h1>This is the Keck Experience Project</h1>
+		<h2>powered by Empath.io</h2>
+	</div>
+</div>
+
+<%= form_for [@experiment,@subject], remote: @remote_submit, method: 'post', html: {class: "form-horizontal", role: "form"} do |f| %>
+<%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %> 
+
+<input type="hidden" name="desktop" value="<%= !@remote_submit %>" />
+
+<div class="wrap">
+	<div class="container">
+		<div class="row" data-animation="fadeInUp">
+		  <div class="col-md-4 col-md-offset-1">
+				<div class="normal-signin"> 
+<!-- 					<div class="title">
+						<h3>Sign Up</h3>
+					</div>  -->
+				  <div class="form-main">
+					  <div class="form-group">
+							<div class="pw-wrap">
+								<i class="fa fa-user fontawesome-icon"></i>
+						  	<input id="name" type="text" class="form-control" placeholder="Subject Name Here" required="required" name="subject[name]">
+							</div>
+							<div class="un-wrap">
+								<i class="fa fa-phone fontawesome-icon"></i>
+								<input type="text" id="phone" class="form-control" placeholder="(XXX) XXX XXXX" required="" name="subject[phone_number]">
+							</div>
+							<div class="row ">
+								<div class="col-xs-12 normal-signin">
+									<button type="submit" class="btn btn-block signin">Submit</button>
+								</div>
+							</div>
+					  	<input type="hidden" class="form-control" value="<%= @experiment.id %>" name="subject[experiment_id]">
+					  	<input type="hidden" class="form-control" value="1" name="signup">
+<!-- 							<div class="row top-buffer">
+								<div class="col-md-4 col-md-offset-8">
+					    		
+								</div>
+							</div> -->
+				  	</div>
+					</div>		
+		  	</div>
+			</div>
+			<div class="col-md-2">
+				<div class="horizontal-divider"></div>
+			</div>
+			<div class="col-md-4">
+				<div class="scoreboard">
+						<h1>Your Scoreboard</h1>
+						<h2>Today:<span class="score"> <%= @signups_today.length %></span></h2>
+						<h2>Yesterday:<span class="score"> <%= @signups_yesterday.length %></span></h2>
+						<h2>This Week:<span class="score"> <%= @signups_this_week.length %></span></h2>
+				</div>
+			</div>
+			<div class="col-md-1"></div>
+		</div>
+	</div>
+</div>
+<% end %>

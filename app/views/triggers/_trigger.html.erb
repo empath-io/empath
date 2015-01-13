@@ -1,0 +1,31 @@
+<tr id="<%= trigger.id %>">
+  <td><%= 
+          if trigger.operation
+            trigger.operation.name 
+          else
+            '(Create an operation)'
+          end
+      %>
+  </td>      
+  <td>
+    <% if can? :update, Trigger %>
+      <%= edit_resource_button(edit_trigger_path(trigger),'#triggers-table','Edit Trigger') %>
+    <% end %>
+  </td>
+  <td>
+    <% if can? :update, Trigger
+          if !trigger.operation.nil? 
+            operationurl = edit_operation_path(trigger.operation)
+          else
+            operationurl = new_trigger_operation_path(trigger)
+          end
+    %>
+        <%= resource_button(operationurl,'<span class="fa fa-lg fa-fw fa-rocket"></span>',"#triggers-table","Edit Operations",'edit-operations-button') %>
+    <% end %>
+  </td>
+  <td>    
+  <% if can? :destroy, Trigger %>
+      <%= destroy_resource_button(trigger_path(trigger),'#triggers-table','Delete trigger') %>
+  <% end %>
+  </td>
+</tr>

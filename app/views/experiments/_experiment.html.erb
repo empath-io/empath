@@ -1,0 +1,27 @@
+<tr>
+  <td><%= experiment.name %></td>
+  <td><%= 
+          resource_button(dashboard_path(experiment),'<i class="fa fa-lg fa-fw fa-search-plus"></i>',"#experiments-table","Experiment Dashboard","","",{},"GET",false)
+      %>
+  </td> 
+  <td>
+    <% if can? :update, Experiment %>
+      <%= resource_button(experiment_subjects_path(experiment),'<i class="fa fa-lg fa-fw fa-user"></i>','#experiments-table','Subjects','','',{},'get',false) %>
+    <% end %>
+  </td>
+  <td>
+    <% if can? :update, Experiment %>
+      <%= resource_button(experiment_triggers_path(experiment),'<i class="fa fa-lg fa-fw fa-flash"></i>','#experiments-table','Triggers','','',{},'get',false) %>
+    <% end %>
+  </td>
+  <td>
+    <% if can? :update, Experiment %>
+      <%= edit_resource_button(edit_experiment_path(experiment)+'.js',"#experiments-table",'Edit experiment') %>
+    <% end %>
+  </td>
+  <td>
+  <% if can? :destroy, Experiment %>
+    <%= destroy_resource_button(experiment_path(experiment),'#experiments-table','Delete experiment') %>
+  <% end %>
+  </td>
+</tr>

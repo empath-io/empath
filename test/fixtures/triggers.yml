@@ -1,0 +1,35 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  experiment_id: 1
+  day: 1
+  hour: 1
+  second: 1
+  timer: false
+  time_of_day: false
+  repeat: false
+  interval: 1
+  monday: false
+  tuesday: false
+  wednesday: false
+  thursday: false
+  friday: false
+  saturday: false
+  sunday: false
+
+two:
+  experiment_id: 1
+  day: 1
+  hour: 1
+  second: 1
+  timer: false
+  time_of_day: false
+  repeat: false
+  interval: 1
+  monday: false
+  tuesday: false
+  wednesday: false
+  thursday: false
+  friday: false
+  saturday: false
+  sunday: false

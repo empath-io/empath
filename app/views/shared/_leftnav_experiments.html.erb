@@ -1,0 +1,16 @@
+
+<li>
+  <a href="#"><i class="fa fa-lg fa-fw fa-table"></i> <span class="menu-item-parent">Experiments</span></a>
+  <ul>
+    <li class="<%= ( is_controller('experiments') && is_action('index') && params[:organization_id].nil? ) ? 'active' : '' %>">
+      <a href="<%= experiments_path %>">My Experiments</a>
+    </li>
+
+    <% if current_user && current_user.is_admin? %>
+<!--       <li class="<%= (is_controller('experiments') && (params[:organization_id]==current_user.organization_id) && is_action('index') ) ? 'active' : '' %>">
+        <a href="<%= organization_experiments_path(current_user.organization_id) %>">Organization Experiments</a>
+      </li> -->
+    <% end %>
+
+  </ul>            
+</li>   

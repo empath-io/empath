@@ -1,0 +1,64 @@
+  <div class="row">
+<!--     <div class="col-xs-6">
+      <% @operations.each do |o| %>
+        <a href="#messages-table-<%= o.name.gsub(/\s/,'-').downcase %>" class='switch-messages-table'>Click here to see "<%= o.name.split.map(&:capitalize).join(' ') %>" Messages</a>
+      <% end  %>
+    </div> -->
+    <div class="col-xs-12">
+
+      <% @operations.each_with_index do |o,i| 
+        color_str = @colors_by_op[i] 
+      %>
+
+        <div class="operation-container">
+
+        <h3 class="message-table"><%= o.name %></h3>
+        <div class="outgoing-message">
+          <p class="triangle-border left mobile-hide">
+            <%= o.content %>
+          </p>
+          <p class="triangle-border top mobile-show">
+            <%= o.content %>
+          </p>
+        </div>
+        <ul class="nav nav-pills message-table">
+          <li class="active"><a href="#today-<%= o.id %>" class="message-table-button" data-target="#today-<%= o.id %>" data-toggle="tab">Today</a></li>
+          <li><a href="#month-<%= o.id %>" class="message-table-button" data-target="#month-<%= o.id %>" data-toggle="tab">Before Today</a></li>
+        </ul>
+
+        <div class="tab-content">
+          <div class="tab-pane active" id="today-<%= o.id %>">
+            <div class="table-container">
+
+              <%= render :partial=> 'messages_table', :locals => {operation: o, incoming_messages: o.incoming_messages.today, table_type: "today"} %>
+
+            <% if o.incoming_messages.today.empty? %>
+              <div class="no-messages">
+                <p>No Messages to Display</p>
+              </div>
+            <% end %>            
+          </div><!-- end .table-container -->
+          </div> <!-- end tab-pane #today-<o.id> -->
+
+
+
+
+          <div class="tab-pane" id="month-<%= o.id %>">
+            <div class="table-container">
+
+              <%= render :partial => 'messages_table', :locals => {operation: o, incoming_messages: o.incoming_messages.not_including_today, table_type: "month"} %>
+
+            <% if o.incoming_messages.not_including_today.empty? %>
+              <div class="no-messages">
+                <p>No Messages to Display</p>
+              </div>
+            <% end %>
+            </div> <!-- end .table-container -->
+          </div> <!-- end tab-pane #month-<o.id> -->
+
+        </div><!-- end .tab-content -->
+      </div><!-- end .operation-container -->
+      <% end # end @operations.each %>
+
+      </div>
+  </div>

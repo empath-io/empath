@@ -1,0 +1,26 @@
+  <div id="send-as-response-form" class="repeat-forms">
+
+
+<% if @experiment.operations.empty? %>
+    Please create other triggers and operations before creating this kind of trigger
+<% else %>
+
+    <input type="hidden" name="trigger[interval]" value='0' />
+    <div class="form-group date-choose">
+      <label for="date" class="col-sm-6 control-label">This triggers an operation</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control time inc-dec-num" id="interval" placeholder="10" name="trigger[interval]" value="<%= @trigger.interval %>">
+      </div>
+      <label for="date" class="col-sm-4 control-label left">minutes...</label>
+    </div>
+    <div class="form-group">
+        <label for="date" class="col-sm-6 control-label">...following a subject's response to this operation:</label>
+        <div class="col-sm-10">
+          <%= select_tag "trigger[preceding_operation_id]", options_for_select(@operations.collect{|o| [o.name,o.id]},@trigger.preceding_operation_id),{:class=>"form-control"} %>    
+        </div>
+      <input type="hidden" name="trigger[trigger_time_zone]" value="<%= @experiment.user.default_trigger_time_zone %>">  
+    </div>
+
+<% end %>
+
+  </div><!-- end .repeat-forms -->

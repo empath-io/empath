@@ -1,0 +1,1 @@
+Rails.application.config.assets.precompile += ['application.css', 'signup.css', 'signup.js']

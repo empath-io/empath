@@ -1,0 +1,49 @@
+      <!-- NAVIGATION : This navigation is also responsive
+
+      To make this navigation dynamic please make sure to link the node
+      (the reference to the nav > ul) after page load. Or the navigation
+      will not initialize.
+      -->
+      <nav>
+        <!-- NOTE: Notice the gaps after each icon usage <i></i>..
+        Please note that these links work a bit different than
+        traditional hre="" links. See documentation for details.
+        -->
+
+        <ul>
+<!--           <li>
+            <a href="index.html" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
+          </li> -->
+<!--           <li>
+            <a href="inbox.html"><i class="fa fa-lg fa-fw fa-inbox"></i> <span class="menu-item-parent">Inbox</span><span class="badge pull-right inbox-badge">14</span></a>
+          </li> -->
+          <%= render :partial => 'shared/leftnav_experiments' %>     
+          <li>
+            <a href="#"><i class="fa fa-lg fa-fw fa-table"></i> <span class="menu-item-parent">Users</span></a>
+            <ul>
+              <li class="<%= ( is_controller('users') && is_action('index') ) ? 'active' : '' %>">
+                <a href="<%= users_path %>">Users</a>
+              </li>
+              <li class="<%= (is_controller('users') && (params[:id]==current_user.id.to_s) ) ? 'active' : '' %>">
+                <a href="<%= user_path(current_user) %>">My Profile</a>
+              </li>
+            </ul>            
+          </li>         
+           <li>
+            <a href="#"><i class="fa fa-lg fa-fw fa-table"></i> <span class="menu-item-parent">Organizations</span></a>
+            <ul>
+              <li class="<%= ( is_controller('organizations') && is_action('index') ) ? 'active' : '' %>">
+                <a href="<%= organizations_path %>">Browse Orgs.</a>
+              </li>
+            </ul>  
+          <li class="mobile-show">
+            <%= link_to "<span class=\"menu-item-parent\">Logout</span>".html_safe, login_path, method: :delete %>
+            <!-- <%= button_to 'Log Out', login_path, :method => :delete %>  -->
+          </li>     
+                           
+        </ul>
+      </nav>
+      <span class="minifyme"> <i class="fa fa-arrow-circle-left hit"></i> </span>
+
+    </aside>
+    <!-- END NAVIGATION -->

@@ -1,0 +1,116 @@
+body {
+	overflow:visible;
+}
+
+.btn.new-resource {
+	margin-bottom:10px;
+}
+
+.table-container {
+	@media (max-width:768px){
+		overflow-x:scroll;
+	}
+}
+table {
+	td {
+		font-size:10px;		
+	}
+}
+
+.datepicker.dropdown-menu{z-index:1151 !important;} 
+
+.login-info {
+	display:none;
+}
+
+.center {
+	text-align: center;
+}
+
+/********************************* Various Elements *********************************/
+
+.triangle-border {
+	position: relative;
+	padding: 15px;
+	margin: 0em 0 0em 3em;
+	border: 1px solid #3276b1;
+	color: #333;
+	background: #fff;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	font-size:10px;
+
+	@media (max-width:768px){
+		margin-left:0;
+	}
+
+	&.top:before {
+		top: -20px;
+		bottom: auto;
+		left: auto;
+		right: 40px;
+		border-width: 0 20px 20px;
+		@media (max-width:768px) {
+			display:none;
+		}
+	}	
+
+	&.top:after {
+		top: -13px;
+		bottom: auto;
+		left: auto;
+		right: 47px;
+		border-width: 0 13px 13px;
+		@media (max-width:768px) {
+			display:none;
+		}
+	}	
+
+	&.left:before {
+		top: auto;
+		bottom: 11px;
+		left: -19px;
+		border-width: 13px 19px 13px 0;
+		border-color: transparent #3276b1;
+		@media (max-width:768px) {
+			display:none;
+		}
+	}
+
+	&.left:after {
+		top: auto;
+		bottom: 12px;
+		left: -17px;
+		border-width: 12px 17px 12px 0;
+		border-color: transparent #fff;
+		@media (max-width:768px) {
+			display:none;
+		}
+	}
+
+	&:before {
+		content: "";
+		position: absolute;
+		bottom: -20px;
+		left: 40px;
+		border-width: 20px 20px 0;
+		border-style: solid;
+		border-color: #3276b1 transparent;
+		display: block;
+		width: 0;
+	}
+
+	&:after {
+		content: "";
+		position: absolute;
+		bottom: -13px;
+		left: 47px;
+		border-width: 13px 13px 0;
+		border-style: solid;
+		border-color: #fff transparent;
+		display: block;
+		width: 0;
+	}
+
+}

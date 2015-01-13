@@ -1,0 +1,14 @@
+if (<%= obj_has_errors(@operation) %> == 1) {
+	$('#modal').modal('hide'); 	
+	$('#modal').on('hidden.bs.modal', function (e) {
+	  <%= return_js_for_edit_modal('operations',{:operation => @operation}).html_safe %>
+		$('#modal').modal('show'); 
+	})
+}
+else {
+	$('#modal').modal('hide');
+	// Replace table with new table
+	$('tr#<%= @operation.trigger.id %>').replaceWith("<%= escape_javascript(render @operation.trigger).html_safe %>")
+	<% #return_js_for_replacing_collection_partial("#operations-table-body",@operations).html_safe %>
+}
+<%= render 'shared/common_js' %>

@@ -1,0 +1,76 @@
+<%
+  if params['remote_submit'] == '1'
+    @remote_submit = true
+  else
+    @remote_submit = false
+  end
+%>
+
+<%= form_for @user, remote: @remote_submit, html: {class: "form-horizontal", role: "form"} do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :first_name %><br>
+    <%= f.text_field :first_name %>
+  </div>
+  <div class="field">
+    <%= f.label :last_name %><br>
+    <%= f.text_field :last_name %>
+  </div>
+  <div class="field">
+    <%= f.label :phone_number %> (Required for SMS alerts)<br>
+    <%= f.text_field :phone_number %>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br>
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :login %><br>
+    <%= f.text_field :login %>
+  </div>
+  <div class="field">
+    <%= f.label 'Time Zone' %><br>  
+    <%= f.select "default_trigger_time_zone", options_for_select(Trigger::TIMEZONES.collect{|key,val| [val,key]},@user.default_trigger_time_zone) %>
+  </div>
+  <div class="field">
+    <%= f.label :password %><br>
+    <%= f.password_field :password %>
+  </div>
+  <div class="field">
+    <%= f.label :password_confirmation %><br>
+    <%= f.password_field :password_confirmation %>
+  </div>
+
+  <% if current_user.is_admin? || current_user.is_god? %>
+  <div class="field">
+    <%= f.label :role %><br>  
+    <%= f.collection_select('role', User::ROLES.collect{|r| if (current_user.is_god? || r!='god');r;end}.compact, :to_s, :humanize) %>
+  </div>
+  <% end %>
+
+  <% if current_user.is_god? %>
+  <div class="field">
+    <%= f.label :organization %><br>  
+    <%= f.collection_select(:organization_id, Organization.all, :id,:name,{:include_blank => 'Please Select'}) %>
+  </div>
+  <% end %>
+
+  <% if @user.organization_id %>
+    <%= f.hidden_field(:organization_id) %>
+  <% end %>
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

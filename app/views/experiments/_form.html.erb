@@ -1,0 +1,38 @@
+<%= form_for @experiment, remote: true, html: {class: "form-horizontal", role: "form"} do |f| %>
+  <% if @experiment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@experiment.errors.count, "error") %> prohibited this experiment from being saved:</h2>
+
+      <ul>
+      <% @experiment.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+
+  <% if current_user %>
+    <%= f.hidden_field :user_id %>
+  <% end %>
+  <div class="field">
+    <%= f.label :custom_field_1_name %><br>
+    <%= f.text_field :custom_field_1_name %>
+  </div>
+  <div class="field">
+    <%= f.label :custom_field_2_name %><br>
+    <%= f.text_field :custom_field_2_name %>
+  </div>
+  <div class="field">
+    <%= f.label :custom_field_3_name %><br>
+    <%= f.text_field :custom_field_3_name %>
+  </div>
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

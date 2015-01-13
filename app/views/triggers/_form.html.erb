@@ -1,0 +1,88 @@
+<% 
+
+# Set up object for shallow routing
+if (params["action"] == 'new')
+  object_for_form = [@experiment,@trigger]
+elsif (params["action"] == 'create') && !@trigger.valid?
+  object_for_form = [@experiment,@trigger]
+else
+  object_for_form = @trigger
+end
+
+%>
+
+<%= form_for object_for_form, remote: true, html: {class: "form-horizontal", role: "form"} do |f| %>
+
+  <% if @trigger.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@trigger.errors.count, "error") %> prohibited this trigger from being saved:</h2>
+
+      <ul>
+      <% @trigger.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">Repeats</label>
+    <div class="col-sm-10">
+
+      <%= f.select "repeat", options_for_select(Trigger::REPEATS.collect{|r| [r.gsub(/_/,' ').capitalize,r]},@trigger.repeat),{},{class: 'form-control'} %>
+    </div>
+  </div>
+
+  <div id="trigger-repeat-forms">
+    <% if @trigger.repeat == 'none' %>
+      <%= render partial: 'no_repeat_form', locals: {form: f, trigger: @trigger} %>
+    <% elsif @trigger.repeat == 'send_today_at' %>
+      <%= render partial: 'send_today_at_form', locals: {form: f, trigger: @trigger} %>
+    <% elsif @trigger.repeat == 'send_after' %>
+      <%= render partial: 'send_after_form', locals: {form: f, trigger: @trigger} %>
+    <% elsif @trigger.repeat == 'send_as_response' %>
+      <%= render partial: 'send_as_response_form', locals: {form: f, trigger: @trigger} %>
+    <% elsif @trigger.repeat == 'daily' %>
+      <%= render partial: 'daily_repeat_form', locals: {form: f, trigger: @trigger} %>
+    <% elsif @trigger.repeat == 'week' %>
+      <%= render partial: 'weekly_repeat_form', locals: {form: f, trigger: @trigger} %>
+    <% elsif @trigger.repeat == 'month' %>
+      <%= render partial: 'monthly_repeat_form', locals: {form: f, trigger: @trigger} %>
+    <% end %>
+  </div>
+
+  <%= f.hidden_field :experiment_id %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>  
+
+<script>
+  $('#trigger_repeat').change(function(){
+    $('.repeat-forms').hide();
+    if ($(this).val()=='none'){
+      $('#trigger-repeat-forms').html("<%= escape_javascript(render partial: 'no_repeat_form', locals: {trigger: @trigger}) %>");
+    }
+    else if ($(this).val()=='send_today_at'){
+      $('#trigger-repeat-forms').html("<%= escape_javascript(render partial: 'send_today_at_form', locals: {trigger: @trigger}) %>");
+    }
+    else if ($(this).val()=='send_after'){
+      $('#trigger-repeat-forms').html("<%= escape_javascript(render partial: 'send_after_form', locals: {trigger: @trigger}) %>");
+    }
+    else if ($(this).val()=='send_as_response'){
+      $('#trigger-repeat-forms').html("<%= escape_javascript(render partial: 'send_as_response_form', locals: {trigger: @trigger}) %>");
+    }
+    else if ($(this).val()=='daily'){
+      $('#trigger-repeat-forms').html("<%= escape_javascript(render partial: 'daily_repeat_form', locals: {trigger: @trigger}) %>");
+    }
+    else if ($(this).val()=='week'){
+      $('#trigger-repeat-forms').html("<%= escape_javascript(render partial: 'monthly_repeat_form', locals: {trigger: @trigger}) %>");
+    }
+    else if ($(this).val()=='month'){
+      $('#trigger-repeat-forms').html("<%= escape_javascript(render partial: 'weekly_repeat_form', locals: {trigger: @trigger}) %>");
+    }
+    <%= render 'shared/common_js' %>    
+  });
+</script>

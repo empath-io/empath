@@ -1,0 +1,28 @@
+  <div id="repeat-no-form" class="repeat-forms">
+
+    <div class="form-group">
+      <label for="inputEmail3" class="col-sm-2 control-label">Occurs once on</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control datepicker" id="trigger-starts-on" value="<%= trigger_begins_on_date_or_today_as_string(trigger) %>" name="trigger[date]">
+      </div>
+    </div>  
+    <input type="hidden" name="trigger[interval]" value='0' />
+    <div class="form-group date-choose">
+      <label for="date" class="col-sm-2 control-label">Time</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control time inc-dec-num" id="hour" placeholder="hr" name="trigger[hour]" value="<%= @trigger.hour %>">
+      </div>
+      <div class="col-sm-3">
+        <input type="text" class="form-control time inc-dec-num" id="minute" placeholder="min" name="trigger[minute]" value="<%= @trigger.minute %>">
+      </div>
+      <div class="col-sm-2">
+        <select class="form-control" name="trigger[am]">
+          <option value="1" <%= 'selected' if trigger.am %>>am</option>
+          <option value="0" <%= 'selected' if !trigger.am %>>pm</option>
+        </select>
+      </div>   
+      <div class="col-sm-2">
+        <%= select_tag "trigger[trigger_time_zone]", options_for_select(Trigger::TIMEZONES.collect{|key,val| [val,key]},trigger.trigger_time_zone),{:class=>'form-control'} %>
+      </div>
+    </div>    
+  </div><!-- end #repeat-daily-form-->   

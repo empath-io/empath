@@ -1,0 +1,164 @@
+// Place all the styles related to the Dashboard controller here.
+// They will automatically be included in application.css.
+// You can use Less here: http://lesscss.org/
+
+#dashboard-page {
+
+	.operation-container {
+
+		.outgoing-message {
+			width:300px;
+			display:inline-block;
+			@media (max-width:768px){
+				width:100%;
+				margin-bottom:10px;
+			}
+		}
+
+
+	}
+
+	.nav-tabs {
+		li:not(.active) {
+			a {
+				color:inherit !important;
+			}
+		}
+	}
+
+	h3.message-table { display:inline-block;}
+
+	.table-container {
+		min-height:100px;
+		border: 1px solid #dddddd;
+		
+		.no-messages {
+			width:100%;
+			text-align: center;
+			padding-top:5px;
+		}
+
+		table.messages-table {
+
+			td.button {
+				text-align: center;
+			}		
+			td.response,th.response {
+				width:20px;
+			}		
+			.btn {
+				color:inherit;
+			}
+			tr.danger {
+
+				td.button{
+					color:red;	
+					&.deactivate {
+						color:inherit;
+					}
+				}
+
+			}
+		}
+	}
+
+	.nav-pills {
+		li {
+			a {
+					padding:5px 8px;
+					&:visited {
+						color:inherit;
+					}
+					&:hover, &:focus {
+						color:black;
+					}
+			}
+			&.active {
+				a {
+					background-color: transparent;
+					border: 1px solid #3276b1;
+					color: black;
+				}
+			}
+		}
+	}
+
+	.message-table {
+
+		&.nav-pills {
+			display:block;
+			position: relative;
+			margin-bottom:10px;
+		}
+	}
+
+	#trends-tab {
+
+		.nav-pill-container {
+			width:auto;
+			margin:0 auto;
+		}
+
+	}
+
+	.row.stats {
+
+		h2 {
+			margin:15px 0;
+			@media (max-width:768px){
+				text-align: center;
+			}
+		}
+
+		.numbers {
+			// margin:0 auto;
+			text-align: left;
+			#sparks {
+				text-align: inherit;
+				li {
+					max-height:50px;
+					padding-left:13px;
+					width:90px;
+					@media (max-width:768px){
+						width:auto;
+					}
+					.score {
+						@media (max-width:768px){
+							padding:0 3px;
+						}
+					}
+					&.title {
+						border-left:none;
+					}
+					h5 {
+						text-align: center;
+					}
+					p {margin-bottom:0}
+					&:last-child {
+						padding-right:10px;
+					}
+				}
+			}
+		}
+
+		.operation-title {
+			text-align: right;
+		}
+
+	}
+
+	#placeholder {
+		td.legendColorBox > div {
+			border:none !important;
+			& > div {
+				width: 4px !important;
+				height: 4px !important;
+			}
+		}
+		td.legendLabel {
+			padding:3px 0 0 4px;
+		}
+	}
+
+
+}

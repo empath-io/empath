@@ -1,0 +1,8 @@
+if (<%= obj_has_errors(@experiment) %> == 1) {
+	<%= return_js_for_edit_modal('experiments',{:experiment => @experiment}).html_safe %>
+}
+// Replace table with new table
+<%= return_js_for_replacing_collection_partial("#experiments-table-body",@experiments).html_safe %>
+
+// Hide/show modal
+$('#modal').modal('<%= @show_modal %>');  

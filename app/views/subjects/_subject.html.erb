@@ -1,0 +1,16 @@
+<tr>
+	<td><%= subject.created_at.in_time_zone.strftime("%m/%d %l:%M %P") %></td>
+	<td><%= subject.name %></td>
+	<td class="mobile-hide"><%= subject.email %></td>
+	<td><%= subject.phone_number %></td>
+	<td>
+	<% if can? :update, Subject %>
+	  <%= edit_resource_button(edit_subject_path(subject)+'.js',"#subjects-table",'Edit Subject Info') %>
+	<% end %>
+	</td>
+	<td>
+	<% if can? :destroy, Subject %>
+		<%= destroy_resource_button(subject_path(subject)+'.js','#subjects-table','Delete Subject') %>
+	<% end %>
+	</td>
+</tr>

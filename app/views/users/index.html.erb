@@ -1,0 +1,58 @@
+<%
+
+  if @organization
+    @new_user_link = new_organization_user_path(@organization)
+  else
+    @new_user_link = new_user_path
+  end
+
+%>
+
+
+<div id="users-page">
+
+<% if can? :create, User %> 
+    <%= button_to @new_user_link + '.js?remote_submit=1', remote: true, class: "btn btn-default btn-lg new-resource", id:"new-user-button", method:'get' do %>
+      <span class="fa fa-lg fa-fw fa-user"></span> New User
+    <% end %>
+<% end %>
+
+<%= begin_jarvis_widget %>
+
+<header>
+  <h2>Listing Users</h2>
+</header>
+
+<div><!-- activities table widget div-->
+
+  <div class="row"> <!-- row for table -->
+<div class="table-container">
+<table class="table table-bordered" id="users-table">
+  <thead>
+    <tr>
+      <th>First name</th>
+      <th>Last name</th>
+      <th>Login</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Organization</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody id="users-table-body">
+    <%= render @users %>
+  </tbody>
+</table>
+</div> <!-- end .table-container -->
+</div><!-- end .row -->
+
+  <div id="modal-wrapper">
+  </div>
+
+  </div><!-- end activity table widgets div -->
+  </div><!-- end booking table widget div -->
+<%= end_jarvis_widget %>
+</div><!-- end #booking-page -->

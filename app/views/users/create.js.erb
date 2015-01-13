@@ -1,0 +1,18 @@
+if (<%= obj_has_errors(@user) %> == 1) {
+	debugger
+	$('#modal').modal('hide'); 
+	$('#modal').on('hidden.bs.modal', function (e) {
+		<%= return_js_for_edit_modal('users',{:user => @user}).html_safe %>
+		$('#modal').modal('show');  
+	}) 
+}
+else {	
+	// hide modal
+	$('#modal').modal('hide');  
+	$('#modal').on('hidden.bs.modal', function (e) {
+		// Replace table with new table
+		<%= return_js_for_replacing_collection_partial("#users-table-body",@users).html_safe %>
+	});
+
+}
+

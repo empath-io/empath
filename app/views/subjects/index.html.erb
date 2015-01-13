@@ -1,0 +1,44 @@
+<div id="subjects-page">
+
+<% if can? :create, Subject %> 
+    <%= button_to new_experiment_subject_path(@experiment) + '.js', remote: true, class: "btn btn-default btn-lg new-resource", id:"new-subject-button", method:'get' do %>
+      <span class="fa fa-lg fa-fw fa-user"></span> New Subject
+    <% end %>
+<% end %>
+
+<%= begin_jarvis_widget %>
+
+<header>
+  <h2>Listing Experiment Subjects</h2>
+</header>
+
+<div><!-- activities table widget div-->
+
+  <div class="row"> <!-- row for table -->
+  <div class="table-container">
+<table class="table table-bordered" id="subjects-table">
+  <thead>
+    <tr>
+      <th>Signed Up</th>
+      <th>Name</th>
+      <th class="mobile-hide">Email</th>
+      <th>Phone Number</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody id="subjects-table-body">
+    <%= render @subjects %>
+  </tbody>
+</table>
+</div><!-- end .table-container -->
+</div><!-- end .row -->
+
+  <div id="modal-wrapper">
+  </div>
+
+  </div><!-- end activity table widgets div -->
+  </div><!-- end booking table widget div -->
+<%= end_jarvis_widget %>
+</div><!-- end #booking-page -->

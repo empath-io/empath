@@ -1,0 +1,59 @@
+<% 
+
+# Set up object for shallow routing
+if (params["action"] == 'new') || (params["action"] == 'create')
+  object_for_form = [@trigger,@operation]
+else
+  object_for_form = @operation
+end
+
+%>
+
+<%= form_for object_for_form, remote: true, html: {class: "form-horizontal", role: "form"} do |f| %>
+
+  <% if @operation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@operation.errors.count, "error") %> prohibited this operation from being saved:</h2>
+
+      <ul>
+      <% @operation.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-4 control-label">Name for this operation</label>
+    <div class="col-sm-8">
+      <%= f.text_field :name,:class=>"form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-4 control-label">Select operation type</label>
+    <div class="col-sm-8">
+      <%= f.select :kind, options_for_select(Operation::KINDS.collect{|k| [make_kind_presentable(k),k]},@operation.kind),:id=>'select-operation-kind' %>
+    </div>
+  </div>  
+
+  <div id="operation-kind-forms">
+    <%= render partial: 'kind_twilio_sms', locals: {:f=>f, 'operation' => @operation} %>
+  </div>
+
+  <%= f.hidden_field :trigger_id %>  
+
+<script>
+  $('#select-operation-kind').change(function(){
+    if ($(this).val()=='twilio_sms'){
+      $('#operation-kind-forms').html("<%= escape_javascript(render partial: 'kind_twilio_sms', locals: {:f=>f, 'operation' => @operation}) %>");
+    }
+  });
+</script>
+
+  <div class="actions col-sm-8 col-sm-offset-4">
+    <%= f.submit %>
+  </div>
+<% end %>  
+
